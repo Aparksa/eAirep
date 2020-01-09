@@ -1,0 +1,559 @@
+<!DOCTYPE html>
+<html lang="fr">
+  <head>
+    <meta charset="utf-8_decode" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content="Formulaire AIREP" />
+    <meta name="author" content="Maxence RENAUD" />
+    <title>Formulaire AIREP</title>
+
+    <!-- jQuery -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+
+    <!-- Bootstrap -->
+    <!-- Latest compiled and minified CSS -->
+    <link
+      rel="stylesheet"
+      href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
+      integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u"
+      crossorigin="anonymous"
+    />
+    <!-- Optional theme -->
+    <link
+      rel="stylesheet"
+      href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css"
+      integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp"
+      crossorigin="anonymous"
+    />
+    <!-- Latest compiled and minified JavaScript -->
+    <script
+      src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"
+      integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
+      crossorigin="anonymous"
+    ></script>
+
+    <style>
+      hr {
+        margin: 0;
+      }
+
+      .checkbox label:after,
+      .radio label:after {
+        content: "";
+        display: table;
+        clear: both;
+      }
+      .checkbox .cr,
+      .radio .cr {
+        position: relative;
+        display: inline-block;
+        border: 1px solid #a9a9a9;
+        border-radius: 0.25em;
+        width: 1.3em;
+        height: 1.3em;
+        /* float: left; */
+        margin-right: 0.5em;
+      }
+      .radio .cr {
+        border-radius: 50%;
+      }
+      .checkbox .cr .cr-icon,
+      .radio .cr .cr-icon {
+        position: absolute;
+        font-size: 0.8em;
+        line-height: 0;
+        top: 50%;
+        left: 20%;
+      }
+      .radio .cr .cr-icon {
+        margin-left: 0.04em;
+      }
+      .checkbox label input[type="checkbox"],
+      .radio label input[type="radio"] {
+        display: none;
+      }
+      .checkbox label input[type="checkbox"] + .cr > .cr-icon,
+      .radio label input[type="radio"] + .cr > .cr-icon {
+        transform: scale(3) rotateZ(-20deg);
+        opacity: 0;
+        transition: all 0.3s ease-in;
+      }
+      .checkbox label input[type="checkbox"]:checked + .cr > .cr-icon,
+      .radio label input[type="radio"]:checked + .cr > .cr-icon {
+        transform: scale(1) rotateZ(0deg);
+        opacity: 1;
+      }
+      .checkbox label input[type="checkbox"]:disabled + .cr,
+      .radio label input[type="radio"]:disabled + .cr {
+        opacity: 0.5;
+      }
+    </style>
+  </head>
+
+  <body>
+    <div class="container">
+      <h1>Message AIREP</h1>
+      <p>
+        Sur cette page, vous pouvez remplir un formulaire AIREP et l'envoyer par
+        mail au CVM de Toulouse
+      </p>
+    </div>
+
+    <div class="container" style="max-width:560px">
+      <!-- Panneau "Situation de l'aéronef" : ID, position, heure UTC et évolution verticale -->
+      <div class="panel panel-info">
+        <div class="panel-heading">
+          <h3 class="panel-title">Situation de l'aéronef</h3>
+        </div>
+        <div class="panel-body">
+          <div class="form-group">
+            <label for="id_aircraft">Identification de l'aéronef</label>
+            <input
+              type="text"
+              class="form-control"
+              id="id_aircraft"
+              placeholder="Ex : AH0431V"
+            />
+          </div>
+          <div class="form-group">
+            <label for="position"
+              >Position :
+              <span style="font-weight: normal"
+                ><b>lat lon</b> (<i>ddmmN/S dddmmE/W</i>) <u>ou</u>
+                <b>balise</b> <u>ou</u> <b>travers balise</b></span
+              ></label
+            >
+            <input
+              type="text"
+              class="form-control"
+              id="position"
+              placeholder="Ex : 4740N 00256E, RESMI, LUKIP, 40 NM from CNA with 80° bearing..."
+            />
+          </div>
+          <div class="form-group">
+            <label for="heure_UTC">Heure UTC</label>
+            <input
+              type="text"
+              class="form-control"
+              id="heure_UTC"
+              placeholder="Ex : 1240"
+            />
+          </div>
+          <div class="form-group">
+            <label for="altitude_ini">Niveau de vol ou altitude</label>
+            <input
+              type="text"
+              class="form-control"
+              id="altitude_ini"
+              placeholder="Ex : FL160, 5000FT, 1200M..."
+            />
+          </div>
+          <label
+            >Evolution verticale
+            <span style="font-weight: normal">(facultatif)</span></label
+          >
+          <div class="input-group" style="margin-top: 7px">
+            <span class="input-group-addon">
+              <input type="radio" name="r_altitude" value="ASC" />
+            </span>
+            <span class="input-group-addon">
+              <label
+                style="font-weight: normal;margin:0; width:150px; text-align: left"
+                >En montée vers le FL</label
+              >
+            </span>
+            <input
+              type="text"
+              class="form-control"
+              id="altitude_ASC"
+              placeholder="Ex : FL340"
+            />
+          </div>
+          <div class="input-group" style="margin-top: 7px">
+            <span class="input-group-addon">
+              <input type="radio" name="r_altitude" value="DES" />
+            </span>
+            <span class="input-group-addon">
+              <label
+                style="font-weight: normal;margin:0; width:150px; text-align: left"
+                >En descente vers le FL</label
+              >
+            </span>
+            <input
+              type="text"
+              class="form-control"
+              id="altitude_DES"
+              placeholder="Ex : FL160"
+            />
+          </div>
+        </div>
+      </div>
+
+      <!-- Panneau "Phénomènes observés" : turbulence, givrage... -->
+      <div class="panel panel-danger">
+        <div class="panel-heading">
+          <h3 class="panel-title">Phénomène(s) observé(s)</h3>
+        </div>
+        <div class="panel-body">
+          <div class="row">
+            <div class="col-xs-5 checkbox" style="margin-left:-15px">
+              <label for="turbulence" style="font-weight: normal">
+                <input
+                  id="turbulence"
+                  type="checkbox"
+                  value="turbulence"
+                  onclick="display_severity(this.id);"
+                />
+                <span class="cr"
+                  ><i class="cr-icon glyphicon glyphicon-ok"></i
+                ></span>
+                (TURB) Turbulences
+              </label>
+            </div>
+            <div class="col-xs-7" style="text-align: center; padding-top: 9px;">
+              <div id="radio_turbulence" style="display:none;">
+                <input
+                  type="radio"
+                  name="r_turbulence"
+                  value="LIGHT"
+                  checked
+                /><span style="margin-right:10px;"> LIGHT</span>
+                <input type="radio" name="r_turbulence" value="MOD" /><span
+                  style="margin-right:10px;"
+                >
+                  MOD</span
+                >
+                <input type="radio" name="r_turbulence" value="SEV" /><span
+                  style="margin-right:10px;"
+                >
+                  SEV</span
+                >
+              </div>
+            </div>
+          </div>
+          <hr />
+          <div class="row">
+            <div class="checkbox col-xs-5" style="margin-left:-15px">
+              <label for="givrage" style="font-weight: normal">
+                <input
+                  id="givrage"
+                  type="checkbox"
+                  value="givrage"
+                  onclick="display_severity(this.id);"
+                />
+                <span class="cr"
+                  ><i class="cr-icon glyphicon glyphicon-ok"></i
+                ></span>
+                (ICE) Givrage
+              </label>
+            </div>
+            <div class="col-xs-7" style="text-align: center; padding-top: 9px;">
+              <div id="radio_givrage" style="display:none">
+                <input
+                  type="radio"
+                  name="r_givrage"
+                  value="LIGHT"
+                  checked
+                /><span style="margin-right:10px;"> LIGHT</span>
+                <input type="radio" name="r_givrage" value="MOD" /><span
+                  style="margin-right:10px;"
+                >
+                  MOD</span
+                >
+                <input type="radio" name="r_givrage" value="SEV" /><span
+                  style="margin-right:10px;"
+                >
+                  SEV</span
+                >
+              </div>
+            </div>
+          </div>
+          <hr />
+          <div class="row checkbox">
+            <label for="onde_orographique" style="font-weight: normal">
+              <input
+                id="onde_orographique"
+                type="checkbox"
+                value="onde_orographique"
+              />
+              <span class="cr"
+                ><i class="cr-icon glyphicon glyphicon-ok"></i
+              ></span>
+              (MTW SEV) Onde orographique forte
+            </label>
+          </div>
+          <hr />
+          <div class="row checkbox">
+            <label for="cb" style="font-weight: normal">
+              <input id="cb" type="checkbox" value="cb" />
+              <span class="cr"
+                ><i class="cr-icon glyphicon glyphicon-ok"></i
+              ></span>
+              (CB) Cumulonimbus
+            </label>
+          </div>
+          <hr />
+          <div class="row checkbox">
+            <label for="ts" style="font-weight: normal">
+              <input id="ts" type="checkbox" value="ts" />
+              <span class="cr"
+                ><i class="cr-icon glyphicon glyphicon-ok"></i
+              ></span>
+              (TS) Orage <b>sans</b> grêle
+            </label>
+          </div>
+          <hr />
+          <div class="row checkbox">
+            <label for="tsgr" style="font-weight: normal">
+              <input id="tsgr" type="checkbox" value="tsgr" />
+              <span class="cr"
+                ><i class="cr-icon glyphicon glyphicon-ok"></i
+              ></span>
+              (TSGR) Orage <b>avec</b> grêle
+            </label>
+          </div>
+          <hr />
+          <div class="row checkbox">
+            <label for="gr" style="font-weight: normal">
+              <input id="gr" type="checkbox" value="gr" />
+              <span class="cr"
+                ><i class="cr-icon glyphicon glyphicon-ok"></i
+              ></span>
+              (GR) Grêle
+            </label>
+          </div>
+          <hr />
+          <div class="row checkbox">
+            <label for="ss_sev" style="font-weight: normal">
+              <input id="ss_sev" type="checkbox" value="ss_sev" />
+              <span class="cr"
+                ><i class="cr-icon glyphicon glyphicon-ok"></i
+              ></span>
+              (SS SEV) Forte tempête de poussière ou de sable
+            </label>
+          </div>
+          <hr />
+          <div class="row checkbox">
+            <label for="va_cld" style="font-weight: normal">
+              <input id="va_cld" type="checkbox" value="va_cld" />
+              <span class="cr"
+                ><i class="cr-icon glyphicon glyphicon-ok"></i
+              ></span>
+              (VA CLD) Nuage de cendres volcaniques
+            </label>
+          </div>
+          <hr />
+          <div class="row checkbox">
+            <label for="other_po" style="font-weight: normal">
+              <input
+                id="other_po"
+                type="checkbox"
+                value="other_po"
+                onclick="displayOtherPO_textarea();"
+              />
+              <span class="cr"
+                ><i class="cr-icon glyphicon glyphicon-ok"></i
+              ></span>
+              Autre phénomène observé
+            </label>
+          </div>
+          <div class="row" style="margin: 0 10px 0 10px;">
+            <textarea
+              id="other_po_textarea"
+              rows="2"
+              style="width:100%;font-style:italic;resize: vertical;display: none;border-radius: 6px;padding:10px;"
+              placeholder="Décrire ici le phénomène observé."
+            ></textarea>
+          </div>
+        </div>
+      </div>
+
+      <div class="row" id="buttons">
+        <div class="col-xs-6" style="text-align: left">
+          <button
+            id="validate_AIREP_btn"
+            type="text"
+            class="btn btn-primary"
+            onclick="generateAIREPbody()"
+            style="margin-right:30px;"
+          >
+            <span
+              class="glyphicon glyphicon-plane"
+              aria-hidden="true"
+              style="margin-right: 7px;"
+            ></span>
+            Générer et valider le message AIREP
+          </button>
+        </div>
+        <div class="col-xs-6" style="text-align: right">
+          <button
+            id="send_AIREP_btn"
+            type="text"
+            class="btn btn-success"
+            onclick="sendAIREP()"
+            style="display:none;"
+          >
+            <span
+              class="glyphicon glyphicon-envelope"
+              aria-hidden="true"
+              style="margin-right: 7px;"
+            ></span>
+            Envoyer le message AIREP
+          </button>
+        </div>
+        <div class="col-xs-12" style="text-align: center; margin-top: 10px">
+          <button
+            id="reload_btn"
+            type="text"
+            class="btn btn-danger"
+            onclick="window.location.reload(true);"
+            style="width:100%; display:none;"
+          >
+            <span
+              class="glyphicon glyphicon-refresh"
+              aria-hidden="true"
+              style="margin-right: 7px;"
+            ></span>
+            Reset
+          </button>
+        </div>
+      </div>
+
+      <!-- Aperçu du message que l'on va envoyer au CVM -->
+      <textarea
+        id="AIREPbody"
+        rows="10"
+        style="width:100%; border: 2px solid black; border-radius:10px; padding:10px; margin-top: 20px; margin-bottom: 20px; font-style:italic;resize: vertical;"
+        placeholder="Le contenu du message AIREP sera affiché ici après validation."
+        readonly
+      ></textarea>
+    </div>
+
+    <footer></footer>
+  </body>
+
+  <script>
+    function generateAIREPbody() {
+      var today = new Date();
+      var dd = today.getDate();
+      var mm = today.getMonth() + 1;
+      var yyyy = today.getFullYear();
+      var phen = "";
+      var alti = document.getElementById("altitude_ini").value;
+      var alti_evo = document.querySelector('input[name="r_altitude"]:checked');
+
+      // On adapte la partie du message traitant de l'altitude : stable, en montée ou en descente
+      if (alti_evo !== null) {
+        if (alti_evo.value == "ASC") {
+          alti += " ASC " + document.getElementById("altitude_ASC").value;
+        } else if (alti_evo.value == "DES") {
+          alti += " DES " + document.getElementById("altitude_DES").value;
+        }
+      }
+
+      // On affine le degré de sévérité de la turbulence ou du givrage constaté
+      if (document.getElementById("turbulence").checked) {
+        if (phen != "") {
+          phen += " ";
+        }
+        phen +=
+          "TURB " +
+          document.querySelector('input[name="r_turbulence"]:checked').value;
+      }
+      if (document.getElementById("givrage").checked) {
+        if (phen != "") {
+          phen += " ";
+        }
+        phen +=
+          "ICE " +
+          document.querySelector('input[name="r_givrage"]:checked').value;
+      }
+
+      // Fonction qui permet d'ajouter tout nouveau phénomène à la liste des phénomènes constatés
+      function logMapElements(value, key, map) {
+        if (document.getElementById(key).checked) {
+          if (phen != "") {
+            phen += ` ${value}`;
+          } else {
+            phen += value;
+          }
+        }
+      }
+      new Map([
+        ["onde_orographique", "MTW SEV"],
+        ["cb", "CB"],
+        ["ts", "TS"],
+        ["tsgr", "TSGR"],
+        ["gr", "GR"],
+        ["ss_sev", "SS SEV"],
+        //['va', 'VA'],
+        ["va_cld", "VA CLD"]
+      ]).forEach(logMapElements);
+
+      // Tout autre phénomène non répertorié
+      if (document.getElementById("other_po").checked) {
+        if (phen != "") {
+          phen += " AUTRE ";
+        } else {
+          phen += "AUTRE ";
+        }
+        phen += document.getElementById("other_po_textarea").value;
+      }
+
+      // L'entête du message est à adapter selon le centre
+      var body =
+        "MESSAGE DU SNA-OI LE " +
+        dd +
+        "/" +
+        mm +
+        "/" +
+        yyyy +
+        "\n" +
+        "1/IDENTIFICATION AERONEF : " +
+        document.getElementById("id_aircraft").value +
+        "\n" +
+        "2/POSITION : " +
+        document.getElementById("position").value +
+        "\n" +
+        "3/HEURE UTC : " +
+        document.getElementById("heure_UTC").value +
+        "\n" +
+        "4/ALTITUDE : " +
+        alti +
+        "\n" +
+        "5/PHENOMENES OBSERVES : " +
+        phen;
+
+      document.getElementById("AIREPbody").value = body;
+      document.getElementById("send_AIREP_btn").style.display = "inline";
+      document.getElementById("reload_btn").style.display = "inline";
+    }
+
+    // Fonction qui ouvre le client de messagerie lors du clic sur le bouton "envoyer", pour envoie au CVM du message AIREP
+    function sendAIREP() {
+      // link : variable à adapter (modifier notamment CRNA Nord)
+      var link =
+        "mailto:gillot.bria@aviation-civile.gouv.fr?cc=:sna-oi-se@aviation-civile.gouv.fr;prevision.ocean-indien@meteo.fr&subject=Message AIREP du SNA-OI&body=" +
+        encodeURIComponent(document.getElementById("AIREPbody").value);
+      window.location.href = link;
+    }
+
+    function display_severity(clicked_id) {
+      if (document.getElementById(clicked_id).checked) {
+        document.getElementById("radio_" + clicked_id).style.display = "inline";
+      } else {
+        document.getElementById("radio_" + clicked_id).style.display = "none";
+      }
+    }
+
+    function displayOtherPO_textarea() {
+      if (document.getElementById("other_po").checked) {
+        document.getElementById("other_po_textarea").style.display = "inline";
+      } else {
+        document.getElementById("other_po_textarea").style.display = "none";
+      }
+    }
+  </script>
+</html>

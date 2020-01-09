@@ -1,0 +1,12 @@
+{
+  "name": "Formulaire de notification au CVM de Toulouse",
+  "version": 2,
+  "alias": ["eairep.now.sh"],
+  "github": {
+    "autoAlias": true
+  },
+  "builds": [
+    { "src": "index.html", "use": "@now/html-minifier" },
+    { "src": "sitemap.txt", "use": "@now/static" }
+  ]
+}
